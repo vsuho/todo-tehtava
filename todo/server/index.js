@@ -1,9 +1,9 @@
-import express from "express";
-import cors from "cors";
-import pkg from "pg";
+import express from 'express';
+import cors from 'cors';
+import pkg from 'pg';
 
-const port= 3001;
-const { Pool } = pkg
+const port = 3001;
+const { Pool } = pkg;
 
 const app = express();
 app.use(cors());
@@ -21,6 +21,17 @@ app.get("/", (req, res) => {
         return res.status(200).json(result.rows);
     })
 })
+
+const openDb= () => {
+    const pool = new Pool ({
+        user: 'postgres',
+        host: 'localhost',
+        database: 'todo',
+        password: 'test',
+        port: 5432
+    })
+    return pool;
+}
 
 app.post('/create', (req, res) => {
     const pool = openDb();
@@ -49,16 +60,5 @@ app.delete('/delete/:id', (req, res) => {
         }
     )
 })
-
-const openDb= () => {
-    const pool = new Pool ({
-        user: 'postgres',
-        host: 'localhost',
-        database: 'todo',
-        password: 'test',
-        port: 5432
-    })
-    return pool;
-}
 
 app.listen(port);
