@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import './Home.css';
 import axios from 'axios';
@@ -27,9 +26,9 @@ function Home() {
 
     axios.post(url + '/create',{
       description: task
-    })
+    }, headers)
     .then(response => {
-    setTasks([...tasks, {id: response.data.id, description: task}])
+    setTasks([...tasks, {id: response.data.id, description: task}]);
     setTask("");
   }).catch(error => {
     alert(error.response.data.error ? error.response.data.error : error);
