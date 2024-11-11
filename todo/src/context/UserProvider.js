@@ -12,9 +12,11 @@ export default function UserProvider({children}) {
         const json = JSON.stringify(user);
         const headers = {headers: {'Content-Type' : 'application/json'}};
         try{
-            await axios.post(url + 'user/register',json, headers);
+           // console.log(url + '/user/register');
+            await axios.post(url + '/user/register', json, headers);
             setUser({email: '', password: ''});
         } catch (error) {
+           // console.log("ERROR" + error);
             throw error;
         }
     }
@@ -28,6 +30,7 @@ export default function UserProvider({children}) {
            setUser(response.data);
            sessionStorage.setItem("user", JSON.stringify(response.data))
         } catch (error) {
+            console.log("TÄÄLLÄ ERROR: " + error);
             setUser({email: '', password: ''});
             throw error;
         }

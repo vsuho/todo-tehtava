@@ -7,7 +7,7 @@ import { useUser } from "../context/useUser";
 const url = 'http://localhost:3001';
 
 function Home() { 
-  const { user, setUser} = useUser();
+  const { user} = useUser();
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
 
@@ -18,7 +18,7 @@ function Home() {
     }).catch(error => {
       alert(error.response.data.error ? error.response.data.error : error);
     })
-  }, [])
+  }, []);
   
 
   const addTask = () =>{
@@ -33,18 +33,18 @@ function Home() {
   }).catch(error => {
     alert(error.response.data.error ? error.response.data.error : error);
   })
-  }
+  };
 
   const deleteTask = (id) => {
     const headers = {headers: {Authorization: user.token}}
     axios.delete(url + '/delete/' + id, headers)
     .then(response => {
-      const withoutRemoved = tasks.filter((item) => item !== id);
+      const withoutRemoved = tasks.filter((item) => item.id !== id);
     setTasks(withoutRemoved);
     }).catch(error => {
       alert(error.response.data.error ? error.response.data.error : error);
     })
-  }
+  };
 
   return (
     <div id="container">

@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import todoRouter from './routers/todoRouter.js';
-import userRouter from './routers/userRouter.js';
+import { router as todoRouter } from './routers/todoRouter.js';
+import { router as userRouter } from './routers/userRouter.js';
 
 const port = process.env.PORT;
 

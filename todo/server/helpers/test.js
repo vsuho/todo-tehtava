@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { pool } from './db.js';
-import { hash } from 'bcrypt';
+import { hash, compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 const { sign } = jwt;
 
@@ -24,4 +24,4 @@ const getToken = (email) =>{
     return sign({user: email}, process.env.JWT_SECRET_KEY);
 }
 
-export { initializeTestDb, insertTestUser, getToken,};
+export { initializeTestDb, insertTestUser, getToken};

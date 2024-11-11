@@ -24,6 +24,7 @@ export default function Authentication({authenticationMode}) {
     } catch (error) {
       const message = error.response && error.response.data ? error. response.data.error : error;
       alert(message);
+      console.log("TÄÄLLÄ" +message);
     }
   }
 
@@ -33,12 +34,18 @@ export default function Authentication({authenticationMode}) {
         <form onSubmit= {handleSubmit}>
          <div>
             <label>Email</label>
-            <input type="email" value={user.email} onChange={e => setUser({...user, email: e.target.value})} />
+            <input
+             type="email"
+              value={user.email}
+               onChange={e => setUser({...user, email: e.target.value})} />
          </div>
         
         <div>
         <label>Password</label>
-        <input type="password" value={user.password} onChange={e => setUser({...user, password: e.target.value})} />
+        <input 
+        type="password"
+         value={user.password}
+          onChange={e => setUser({...user, password: e.target.value})} />
       </div>
       <div>
         <button>{authenticationMode === AuthenticationMode.Login ? 'Login' : 'Submit'}</button>

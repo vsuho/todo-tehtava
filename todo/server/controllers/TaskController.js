@@ -1,4 +1,5 @@
-import { selectAllTasks, insertTask } from "../models/Task.js";
+import { selectAllTasks, insertTask, deleteTask } from "../models/Task.js";
+import { emptyOrRows } from '../helpers/utils.js'
 
 const getTasks = async(req, res, next) => {
     try {
@@ -23,4 +24,19 @@ const postTask = async(req, res, next) => {
     }
 }
 
-export { getTasks, postTask };
+const removeTask = async (req, res, next) => {
+	try {
+		const id = parseInt(req.params.id);
+		if (isNaN(id) || id <= 0) {
+			const error = new Error("Invalid id");
+			error.statusCode = 400;
+			return next(error);
+		}
+		const result = await deleteTask(id);
+		return res.status(200).json({ id: result });
+	} catch (error) {
+		return next(error);
+	}
+}
+
+export { getTasks, postTask, removeTask };

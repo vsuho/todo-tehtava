@@ -1,5 +1,5 @@
 const emptyOrRows = (result) =>{
-    if (!result) return []
+    if (!result) return [];
     return result.rows;
 }
 

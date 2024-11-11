@@ -1,6 +1,8 @@
-import { hash } from 'bcrypt';
+import { hash, compare } from 'bcrypt';
 import { insertUser, selectUserByEmail } from '../models/User.js'
 import { ApiError } from '../helpers/apiErrorClass.js';
+import jwt from "jsonwebtoken";
+const { sign } = jwt;
 
 const postRegistration = async(req, res, next) => {
     try{
@@ -15,10 +17,18 @@ const postRegistration = async(req, res, next) => {
     }
 }
 
+const createUserObject = (id, email, token=undefined) => {
+    return{
+        'id': id,
+        'email': email,
+        ...(token !== undefined) && {'token' : token}
+    }
+}
+
 const postLogin = async(req, res, next) => {
     const invalid_credentials_message = 'Invalid credentials.'
     try{
-        const userFromDb = await selectUserByEmail(req.body.email)
+        const userFromDb = await selectUserByEmail(req.body.email);
         if (userFromDb.rowCount === 0) return next(new ApiError(invalid_credentials_message));
       
         const user = userFromDb.rows[0];
@@ -28,14 +38,6 @@ const postLogin = async(req, res, next) => {
         return res.status(200 ).json(createUserObject(user.id, user.email, token));
     } catch (error) {
         return next(error);
-    }
-}
-
-const createUserObject = (id, email, token=undefined) => {
-    return{
-        'id': id,
-        'email': email,
-        ...(token !== undefined) && {'token' : token}
     }
 }
 
